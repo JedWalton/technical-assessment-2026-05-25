@@ -48,15 +48,18 @@ TDD Red→Green:
 
 ## Test plan
 
-- [ ] Empty slice → nil, no files created in dir
-- [ ] Single order → one `.csv` file, correct header and row
-- [ ] Multiple orders → all rows present in order
-- [ ] No `.csv.tmp` files remain after successful write
-- [ ] Write to read-only directory → error, no `.csv` file created
-- [ ] `go test -race ./...` clean
-- [ ] `go vet` + gofmt clean
+Verified against `internal/batch/writer_test.go` (`make ci` on 2026-05-25).
+
+- [x] Empty slice → nil, no files created in dir — `TestFileWriterWrite_emptyBatchIsNoOp` (`nil` and `[]order.Order{}`)
+- [x] Single order → one `.csv` file, correct header and row — `TestFileWriterWrite_singleOrder` (`assertHeader`, `assertRow`)
+- [x] Multiple orders → all rows present in order — `TestFileWriterWrite_multipleOrdersPreservesOrder`
+- [x] No `.csv.tmp` files remain after successful write — `TestFileWriterWrite_noTmpFilesRemain`
+- [x] Write to read-only directory → error, no `.csv` file created — `TestFileWriterWrite_readOnlyDirReturnsError`
+- [x] `go test -race ./...` clean — `make ci` / `make test-race`
+- [x] `go vet` + gofmt clean — `make ci` (`fmt-check`, `vet`)
+- [x] Cancelled context returns before I/O — `TestFileWriterWrite_cancelledContext` (design decision; not in original list)
 
 ## Acceptance criteria
 
-- `make ci` passes.
-- `go test -cover ./internal/batch/...` reports high coverage on writer paths.
+- [x] `make ci` passes.
+- [x] `go test -cover ./internal/batch/...` reports high coverage on writer paths (**70.2%**; all listed behaviours covered; `randomHex` read failure path untested).

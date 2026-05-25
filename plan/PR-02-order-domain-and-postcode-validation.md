@@ -57,20 +57,22 @@ TDD Red→Green:
 
 ## Test plan
 
-- [ ] Postcode: empty → `ErrPostcodeEmpty`
-- [ ] Postcode: 8 valid chars → nil
-- [ ] Postcode: 9 chars → `ErrPostcodeTooLong`
-- [ ] Postcode: unicode, punctuation, tab → `ErrPostcodeInvalidChar`
-- [ ] Postcode: mixed case, digits, spaces → nil
-- [ ] Order: valid → nil
-- [ ] Order: missing customer number → `ErrCustomerNumberRequired`
-- [ ] Order: missing address → `ErrAddressRequired`
-- [ ] Order: invalid postcode → corresponding postcode error
-- [ ] `go test -race ./...` clean
-- [ ] `go vet` + gofmt clean
-- [ ] Coverage on `internal/order` reported in CI
+Verified against `internal/order/postcode_test.go` and `internal/order/order_test.go` (`make ci` on 2026-05-25).
+
+- [x] Postcode: empty → `ErrPostcodeEmpty` — `TestValidatePostcode/empty`
+- [x] Postcode: 8 valid chars → nil — `TestValidatePostcode/valid_max_length_eight` (`AB12 3CD`)
+- [x] Postcode: 9 chars → `ErrPostcodeTooLong` — `TestValidatePostcode/too_long_nine_chars`
+- [x] Postcode: unicode, punctuation, tab → `ErrPostcodeInvalidChar` — `unicode_letter`, `hyphen`, `tab`, `newline`
+- [x] Postcode: mixed case, digits, spaces → nil — `valid_mixed_case_and_digits`, `valid_digits_only`, `valid_spaces_only_within_limit`
+- [x] Order: valid → nil — `TestOrderValidate/valid_order`
+- [x] Order: missing customer number → `ErrCustomerNumberRequired` — `missing_customer_number`, `whitespace_only_customer_number`
+- [x] Order: missing address → `ErrAddressRequired` — `missing_address`, `whitespace_only_address`
+- [x] Order: invalid postcode → corresponding postcode error — `empty_postcode`, `postcode_too_long`, `postcode_invalid_character`
+- [x] `go test -race ./...` clean — `make ci` / `make test-race`
+- [x] `go vet` + gofmt clean — `make ci` (`fmt-check`, `vet`)
+- [x] Coverage on `internal/order` reported in CI — **100.0%** (`go test -cover ./internal/order/...`)
 
 ## Acceptance criteria
 
-- `make ci` passes on a fresh checkout of this branch.
-- `go test -cover ./internal/order/...` reports ≥ 85% coverage on the order package.
+- [x] `make ci` passes on a fresh checkout of this branch.
+- [x] `go test -cover ./internal/order/...` reports ≥ 85% coverage on the order package (**100.0%**).
