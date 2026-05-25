@@ -17,12 +17,12 @@ type Ticker interface {
 	Stop()
 }
 
-// realClock uses the system clock.
-type realClock struct{}
+// SystemClock uses the system clock (production implementation).
+type SystemClock struct{}
 
-func (realClock) Now() time.Time { return time.Now().UTC() }
+func (SystemClock) Now() time.Time { return time.Now().UTC() }
 
-func (realClock) NewTicker(d time.Duration) Ticker {
+func (SystemClock) NewTicker(d time.Duration) Ticker {
 	return &realTicker{t: time.NewTicker(d)}
 }
 
