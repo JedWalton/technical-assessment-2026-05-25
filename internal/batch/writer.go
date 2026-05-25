@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/order"
+	"orderservice/internal/order"
 )
 
 var csvHeaderRow = []string{"customer_number", "address", "postcode", "placed_at"}

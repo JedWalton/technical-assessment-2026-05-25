@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/config"
+	"orderservice/internal/config"
 )
 
 func TestSetup_requiresOutputDir(t *testing.T) {

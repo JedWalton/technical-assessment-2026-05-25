@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/order"
+	"orderservice/internal/order"
 )
 
 // MaxRequestBodyBytes is the maximum allowed POST /orders body size.
