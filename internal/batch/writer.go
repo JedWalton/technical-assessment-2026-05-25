@@ -17,6 +17,8 @@ var csvHeaderRow = []string{"customer_number", "address", "postcode", "placed_at
 
 // FileWriter writes batches of orders to CSV files in a directory using an
 // atomic rename so consumers never read partial files.
+var _ Writer = (*FileWriter)(nil)
+
 type FileWriter struct {
 	Dir string
 }
