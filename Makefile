@@ -1,6 +1,7 @@
-.PHONY: help build run test test-race test-cover test-integration vet fmt fmt-check ci clean
+.PHONY: help build run test test-race test-cover test-integration vet fmt fmt-check ci clean podman-build podman-run
 
 BINARY      := orderservice
+IMAGE       ?= orderservice:latest
 PKG         := ./...
 COVER_OUT   := coverage.out
 COVER_HTML  := coverage.html
@@ -49,3 +50,14 @@ ci: fmt-check vet test-race ## Run the same checks CI runs.
 
 clean: ## Remove build and coverage artifacts.
 	rm -f $(BINARY) $(COVER_OUT) $(COVER_HTML)
+
+podman-build: ## Build the container image.
+	podman build -t $(IMAGE) .
+
+podman-run: podman-build ## Run the container (maps 8080, writes CSVs to ./data).
+	mkdir -p data
+	podman run --rm -p 8080:8080 \
+		-e OUTPUT_DIR=/data \
+		-e BATCH_SIZE=100 \
+		-v "$(CURDIR)/data:/data" \
+		$(IMAGE)

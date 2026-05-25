@@ -1,0 +1,13 @@
+.git
+.github
+.idea
+.vscode
+plan/
+*.md
+orderservice
+bin/
+coverage.out
+coverage.html
+*.test
+.env
+.env.local
