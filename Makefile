@@ -1,6 +1,7 @@
-.PHONY: help build run test test-race test-cover test-integration vet fmt fmt-check ci clean
+.PHONY: help build run test test-race test-cover test-integration vet fmt fmt-check ci clean docker-build docker-run
 
 BINARY      := orderservice
+IMAGE       ?= orderservice:latest
 PKG         := ./...
 COVER_OUT   := coverage.out
 COVER_HTML  := coverage.html
@@ -49,3 +50,14 @@ ci: fmt-check vet test-race ## Run the same checks CI runs.
 
 clean: ## Remove build and coverage artifacts.
 	rm -f $(BINARY) $(COVER_OUT) $(COVER_HTML)
+
+docker-build: ## Build the container image.
+	docker build -t $(IMAGE) .
+
+docker-run: docker-build ## Run the container (maps 8080, writes CSVs to ./data).
+	mkdir -p data
+	docker run --rm -p 8080:8080 \
+		-e OUTPUT_DIR=/data \
+		-e BATCH_SIZE=100 \
+		-v "$(CURDIR)/data:/data" \
+		$(IMAGE)
