@@ -5,7 +5,7 @@ Branch: `feature/uw-7-dockerisation-and-docs`
 ## Summary
 
 - Add a multi-stage `Dockerfile` (Go 1.22 Alpine builder → distroless static non-root runtime).
-- Add `.dockerignore`, `Makefile` `docker-build` / `docker-run` targets.
+- Add `.dockerignore`, `Makefile` `podman-build` / `podman-run` targets.
 - Polish `README.md` with architecture overview, API example, design decisions, Docker usage, and explicit out-of-scope items from the wider brief.
 
 ## Scope
@@ -18,7 +18,8 @@ Branch: `feature/uw-7-dockerisation-and-docs`
 - **Distroless static runtime** — minimal attack surface; fully static Go binary (`CGO_ENABLED=0`). No shell or `curl` in the image.
 - **Kubernetes-style health checks** — liveness/readiness use `GET /healthz` and `GET /readyz` via HTTP probes in the README (distroless has no `curl` for Docker `HEALTHCHECK`).
 - **Non-root `nonroot` user** (UID 65532) — matches distroless conventions.
-- **Volume for `OUTPUT_DIR`** — CSV files written to a mounted volume in `docker-run` example.
+- **Volume for `OUTPUT_DIR`** — CSV files written to a mounted volume in `podman-run` example.
+- **Podman on macOS** — targets use `podman` explicitly; start the VM with `podman machine start` before building.
 
 ## Process
 

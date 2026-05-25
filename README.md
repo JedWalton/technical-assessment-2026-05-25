@@ -35,19 +35,25 @@ export BATCH_SIZE=100
 make run
 ```
 
-### Docker
+### Container (Podman)
+
+Requires a running Podman machine on macOS (`podman machine start`).
 
 ```bash
-make docker-build
+make podman-build
+make podman-run    # builds, maps 8080, mounts ./data as OUTPUT_DIR
+```
+
+Manual run after build:
+
+```bash
 mkdir -p data
-docker run --rm -p 8080:8080 \
+podman run --rm -p 8080:8080 \
   -e OUTPUT_DIR=/data \
   -e BATCH_SIZE=100 \
   -v "$(pwd)/data:/data" \
   orderservice:latest
 ```
-
-Or use `make docker-run` (builds the image and runs with `./data` mounted).
 
 ## API
 
