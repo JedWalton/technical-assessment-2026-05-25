@@ -1,5 +1,5 @@
-// Command orderservice is the HTTP entrypoint for the UW broadband order
-// batching microservice.
+// Command orderservice is the HTTP entrypoint for the order batching
+// microservice.
 package main
 
 import (

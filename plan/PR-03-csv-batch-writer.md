@@ -1,6 +1,6 @@
 # PR #3 — CSV batch writer
 
-Branch: `feature/uw-3-csv-batch-writer`
+Branch: `feature/pr-3-csv-batch-writer` (merged as `feature/uw-3-csv-batch-writer`)
 
 ## Summary
 

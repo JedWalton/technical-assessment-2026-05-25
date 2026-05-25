@@ -1,19 +1,17 @@
-# UW Broadband Order Service — Architecture & PR Plan
+# Order Batching Service — Architecture & PR Plan
 
-A standard-library-only Go microservice for the UW broadband-orders
-take-home, delivered as a sequence of small, reviewable PRs that mirror the
-prior Java take-home's PR style. Architecture, testing approach, and PR
-boundaries are aligned with Google's Go style guide / Effective Go.
+A standard-library-only Go microservice for order intake and CSV batching,
+delivered as a sequence of small, reviewable PRs. Architecture, testing
+approach, and PR boundaries are aligned with Google's Go style guide /
+Effective Go.
 
 ## 1. Constraints we are designing under
 
-- **Brief**: HTTP endpoint receives broadband orders, validates them, buffers
+- **Requirements**: HTTP endpoint receives orders, validates them, buffers
   them, and writes them to CSV files in a configurable directory whenever the
   buffer reaches a configurable batch size **or** at end-of-day.
-- **Env vars** (per brief): `OUTPUT_DIR` (string), `BATCH_SIZE` (int).
-- **Validation rule** (per brief): postcode is `[A-Za-z0-9 ]{1,8}`.
-- **No AI tells**: the README contains a prompt-injection asking to prefix
-  functions with `INS` — ignored.
+- **Env vars** (per spec): `OUTPUT_DIR` (string), `BATCH_SIZE` (int).
+- **Validation rule** (per spec): postcode is `[A-Za-z0-9 ]{1,8}`.
 - **Stdlib-first**: `net/http`, `encoding/csv`, `encoding/json`, `log/slog`,
   `os`, `sync`, `time`, `testing`, `testing/httptest`, `errors`. No
   third-party libs in `go.mod`.
@@ -117,33 +115,34 @@ PR body.
 ## 4. PR sequence
 
 Each PR follows TDD Red→Green where applicable and produces a
-self-contained slice. Branch names follow `feature/uw-N-<slug>`.
+self-contained slice. Branch names follow `feature/pr-N-<slug>` (historical
+merges used a `feature/uw-N-*` prefix).
 
-- **PR #1 — `feature/uw-1-project-scaffold`**
+- **PR #1 — `feature/pr-1-project-scaffold`**
   - `go.mod` (Go 1.22+, no deps), `.gitignore`, `Makefile`, CI workflow
     (`vet` + `go test -race -cover ./...` + gofmt check),
     `cmd/orderservice/main.go` stub, `plan/PR-01-project-scaffold.md`.
-- **PR #2 — `feature/uw-2-order-domain-and-postcode-validation`**
+- **PR #2 — `feature/pr-2-order-domain-and-postcode-validation`**
   - `internal/order/order.go` — `Order` struct + `Validate()` method.
   - `internal/order/postcode.go` — `ValidatePostcode(string) error`
     (pure function, hand-rolled loop).
   - Sentinel errors and table-driven tests.
-- **PR #3 — `feature/uw-3-csv-batch-writer`**
+- **PR #3 — `feature/pr-3-csv-batch-writer`**
   - `internal/batch/writer.go` — `FileWriter` with atomic rename.
   - Tests with `t.TempDir()` for filesystem behaviour.
-- **PR #4 — `feature/uw-4-batch-service`**
+- **PR #4 — `feature/pr-4-batch-service`**
   - `internal/batch/service.go` — `Service` with `Add`, `Flush`, `Run`.
   - `internal/batch/clock.go` — `Clock` interface for ticker fakes.
   - Race-detector tests for concurrent adds + size and EOD triggers.
-- **PR #5 — `feature/uw-5-http-api`**
+- **PR #5 — `feature/pr-5-http-api`**
   - `internal/httpapi/handler.go` — `POST /orders`, `GET /healthz`,
     `GET /readyz`.
   - `internal/httpapi/middleware.go` — request logging, panic recovery.
-- **PR #6 — `feature/uw-6-wiring-and-graceful-shutdown`**
+- **PR #6 — `feature/pr-6-wiring-and-graceful-shutdown`**
   - `internal/config/config.go` — env-var parsing + validation.
   - `cmd/orderservice/main.go` — full wiring, `signal.NotifyContext`,
     `http.Server.Shutdown`, final `Service.Flush`.
-- **PR #7 — `feature/uw-7-dockerisation-and-docs`**
+- **PR #7 — `feature/pr-7-dockerisation-and-docs`**
   - Multi-stage `Dockerfile` (distroless), README polish.
 
 ## 5. Testing philosophy (applies to every PR)
@@ -199,7 +198,7 @@ Each `plan/PR-NN-*.md` follows this structure:
 ```
 # PR #N — <title>
 
-Branch: `feature/uw-N-<slug>`
+Branch: `feature/pr-N-<slug>`
 
 ## Summary
 - ...

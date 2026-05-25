@@ -1,6 +1,6 @@
 # PR #5 — HTTP API
 
-Branch: `feature/uw-5-http-api`
+Branch: `feature/pr-5-http-api` (merged as `feature/uw-5-http-api`)
 
 ## Summary
 

@@ -10,7 +10,7 @@ var (
 	ErrPostcodeInvalidChar = errors.New("postcode may only contain letters, digits, and spaces")
 )
 
-// ValidatePostcode checks the postcode against the take-home rule: 1–8
+// ValidatePostcode checks the postcode against the spec rule: 1–8
 // characters of ASCII letters, digits, and spaces only.
 func ValidatePostcode(postcode string) error {
 	if postcode == "" {

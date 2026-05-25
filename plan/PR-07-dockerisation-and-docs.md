@@ -1,6 +1,6 @@
 # PR #7 — Dockerisation and documentation
 
-Branch: `feature/uw-7-dockerisation-and-docs`
+Branch: `feature/pr-7-dockerisation-and-docs` (merged as `feature/uw-7-dockerisation-and-docs`)
 
 ## Summary
 

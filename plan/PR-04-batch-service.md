@@ -1,6 +1,6 @@
 # PR #4 — Batch service
 
-Branch: `feature/uw-4-batch-service`
+Branch: `feature/pr-4-batch-service` (merged as `feature/uw-4-batch-service`)
 
 ## Summary
 
