@@ -1,4 +1,45 @@
-# technical-assessment-2026-05-25
+# UW Broadband Order Service
+
+A Go microservice that receives broadband orders over HTTP, validates them, buffers them, and writes them to CSV files in a configurable output directory whenever the batch size is reached or the end-of-day ticker fires.
+
+Built on the Go standard library only — no third-party dependencies.
+
+## Quick start
+
+```bash
+make ci      # gofmt + go vet + go test -race -cover ./...
+make build   # produces ./orderservice
+make run     # build + run (Ctrl-C to stop)
+make help    # show all targets
+```
+
+## Environment variables
+
+Wired in PR #6. Stubbed here for reference.
+
+| Variable      | Type    | Description                                                                       |
+|---------------|---------|-----------------------------------------------------------------------------------|
+| `OUTPUT_DIR`  | string  | Directory the service writes batched CSV files into.                              |
+| `BATCH_SIZE`  | int     | Maximum number of orders per CSV file (also the auto-flush threshold).            |
+
+## Project layout
+
+```
+.
+├── cmd/orderservice/      main entrypoint (run(ctx, args, getenv) pattern)
+├── internal/order/        domain types + postcode validation (PR #2)
+├── internal/batch/        CSV writer + buffered batch service (PRs #3-4)
+├── internal/httpapi/      net/http handlers + middleware (PR #5)
+├── internal/config/       env-var parsing + validation (PR #6)
+├── plan/                  architecture doc + per-PR feature design docs
+└── .github/workflows/     CI: gofmt + vet + go test -race -cover
+```
+
+## Plan
+
+See [`plan/00-architecture-and-plan.md`](plan/00-architecture-and-plan.md) for the full design and PR sequence. Each subsequent PR carries its own `plan/PR-NN-*.md` whose body is also the body of the GitHub PR.
+
+---
 
 # Insurance interview exercise
 
