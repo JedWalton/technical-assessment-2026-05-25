@@ -15,12 +15,24 @@ make help    # show all targets
 
 ## Environment variables
 
-Wired in PR #6. Stubbed here for reference.
+| Variable             | Required | Default   | Description                                                       |
+|----------------------|----------|-----------|-------------------------------------------------------------------|
+| `OUTPUT_DIR`         | yes      | —         | Directory for batched CSV files (created if missing).             |
+| `BATCH_SIZE`         | yes      | —         | Max orders per file; auto-flush when the buffer reaches this size.|
+| `HTTP_ADDR`          | no       | `:8080`   | HTTP listen address.                                              |
+| `SHUTDOWN_TIMEOUT`   | no       | `15s`     | Graceful shutdown timeout for in-flight requests and final flush. |
 
-| Variable      | Type    | Description                                                                       |
-|---------------|---------|-----------------------------------------------------------------------------------|
-| `OUTPUT_DIR`  | string  | Directory the service writes batched CSV files into.                              |
-| `BATCH_SIZE`  | int     | Maximum number of orders per CSV file (also the auto-flush threshold).            |
+```bash
+export OUTPUT_DIR=/tmp/orders
+export BATCH_SIZE=100
+make run
+```
+
+Integration test (HTTP submit → CSV → shutdown flush):
+
+```bash
+make test-integration
+```
 
 ## Project layout
 

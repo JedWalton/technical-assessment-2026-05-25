@@ -14,7 +14,7 @@ func TestServiceAdd_flushesWhenBatchSizeReached(t *testing.T) {
 	t.Parallel()
 
 	w := &recordingWriter{}
-	svc := NewService(w, realClock{}, 2, time.Hour)
+	svc := NewService(w, SystemClock{}, 2, time.Hour)
 
 	o1 := order.Order{CustomerNumber: "C1", Address: "A1", Postcode: "AB1", PlacedAt: time.Now().UTC()}
 	o2 := order.Order{CustomerNumber: "C2", Address: "A2", Postcode: "AB2", PlacedAt: time.Now().UTC()}
@@ -82,7 +82,7 @@ func TestServiceAdd_concurrentNoLostOrders(t *testing.T) {
 		batchSize    = 10
 	)
 	w := &recordingWriter{}
-	svc := NewService(w, realClock{}, batchSize, time.Hour)
+	svc := NewService(w, SystemClock{}, batchSize, time.Hour)
 
 	var wg sync.WaitGroup
 	wg.Add(goroutines)
@@ -141,7 +141,7 @@ func TestServiceFlush_writesPartialBatch(t *testing.T) {
 	t.Parallel()
 
 	w := &recordingWriter{}
-	svc := NewService(w, realClock{}, 100, time.Hour)
+	svc := NewService(w, SystemClock{}, 100, time.Hour)
 
 	o := order.Order{CustomerNumber: "C1", Address: "A1", Postcode: "AB1", PlacedAt: time.Now().UTC()}
 	if err := svc.Add(context.Background(), o); err != nil {
@@ -159,7 +159,7 @@ func TestServiceFlush_emptyIsNoOp(t *testing.T) {
 	t.Parallel()
 
 	w := &recordingWriter{}
-	svc := NewService(w, realClock{}, 10, time.Hour)
+	svc := NewService(w, SystemClock{}, 10, time.Hour)
 
 	if err := svc.Flush(context.Background()); err != nil {
 		t.Fatalf("Flush: %v", err)

@@ -1,4 +1,4 @@
-.PHONY: help build run test test-race test-cover vet fmt fmt-check ci clean
+.PHONY: help build run test test-race test-cover test-integration vet fmt fmt-check ci clean
 
 BINARY      := orderservice
 PKG         := ./...
@@ -23,6 +23,9 @@ test-race: ## Run all tests with the race detector.
 test-cover: ## Run all tests with coverage profile.
 	go test -race -covermode=atomic -coverprofile=$(COVER_OUT) $(PKG)
 	@go tool cover -func=$(COVER_OUT) | tail -n 1
+
+test-integration: ## Run integration tests (HTTP + CSV + shutdown).
+	go test -tags=integration -race ./cmd/orderservice/...
 
 cover-html: test-cover ## Generate HTML coverage report.
 	go tool cover -html=$(COVER_OUT) -o $(COVER_HTML)
