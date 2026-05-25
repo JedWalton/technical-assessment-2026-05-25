@@ -14,9 +14,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/batch"
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/config"
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/httpapi"
+	"orderservice/internal/batch"
+	"orderservice/internal/config"
+	"orderservice/internal/httpapi"
 )
 
 const serviceName = "orderservice"

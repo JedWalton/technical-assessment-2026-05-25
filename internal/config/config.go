@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/batch"
+	"orderservice/internal/batch"
 )
 
 const (

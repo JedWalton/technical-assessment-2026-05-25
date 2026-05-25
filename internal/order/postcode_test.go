@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/order"
+	"orderservice/internal/order"
 )
 
 func TestValidatePostcode(t *testing.T) {

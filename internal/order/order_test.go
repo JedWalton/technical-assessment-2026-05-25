@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/order"
+	"orderservice/internal/order"
 )
 
 func validOrder() order.Order {

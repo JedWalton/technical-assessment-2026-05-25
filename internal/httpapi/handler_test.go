@@ -13,8 +13,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/httpapi"
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/order"
+	"orderservice/internal/httpapi"
+	"orderservice/internal/order"
 )
 
 func TestPOSTOrders_validOrderAccepted(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JedWalton/technical-assessment-2026-05-25/internal/config"
+	"orderservice/internal/config"
 )
 
 func TestLoad_missingOutputDir(t *testing.T) {
