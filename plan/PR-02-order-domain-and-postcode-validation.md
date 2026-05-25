@@ -1,11 +1,11 @@
 # PR #2 — Order domain and postcode validation
 
-Branch: `feature/uw-2-order-domain-and-postcode-validation`
+Branch: `feature/pr-2-order-domain-and-postcode-validation` (merged as `feature/uw-2-order-domain-and-postcode-validation`)
 
 ## Summary
 
 - Add `internal/order` package with the `Order` domain type and a `Validate()` method that checks all required fields.
-- Add `ValidatePostcode(string) error` as a pure, hand-rolled validator (no regex) enforcing the take-home rule: postcode must be 1–8 characters of letters, digits, and spaces only.
+- Add `ValidatePostcode(string) error` as a pure, hand-rolled validator (no regex) enforcing the spec rule: postcode must be 1–8 characters of letters, digits, and spaces only.
 - Export sentinel errors so HTTP handlers in PR #5 can map them to `400` responses via `errors.Is`.
 - Add table-driven, parallel black-box tests (`package order_test`) covering postcode boundaries and full order validation.
 
@@ -45,8 +45,6 @@ var (
 - **Sentinel errors, not error strings** — callers use `errors.Is` for stable HTTP status mapping; messages are fixed on the sentinel values.
 - **`Validate()` composes `ValidatePostcode`** — postcode rules live in one place; `Order.Validate` also guards customer number and address so HTTP handlers only call one method.
 - **Black-box tests** (`package order_test`) — tests import only the public API, matching how `httpapi` will consume the package in PR #5.
-- **No `INS` prefix** — the README prompt-injection is ignored.
-
 ## Process
 
 TDD Red→Green:

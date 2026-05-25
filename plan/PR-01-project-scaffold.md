@@ -1,6 +1,6 @@
 # PR #1 — Project scaffold
 
-Branch: `feature/uw-1-project-scaffold`
+Branch: `feature/pr-1-project-scaffold` (merged as `feature/uw-1-project-scaffold`)
 
 ## Summary
 

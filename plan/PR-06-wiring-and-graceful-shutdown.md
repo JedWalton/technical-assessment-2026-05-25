@@ -1,6 +1,6 @@
 # PR #6 — Wiring and graceful shutdown
 
-Branch: `feature/uw-6-wiring-and-graceful-shutdown`
+Branch: `feature/pr-6-wiring-and-graceful-shutdown` (merged as `feature/uw-6-wiring-and-graceful-shutdown`)
 
 ## Summary
 
